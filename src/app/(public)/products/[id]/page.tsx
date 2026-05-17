@@ -68,10 +68,6 @@ export default function ProductDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    loadProduct();
-  }, [id]);
-
   async function loadProduct() {
     setIsLoading(true);
 
@@ -89,6 +85,10 @@ export default function ProductDetailsPage() {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    void Promise.resolve().then(() => loadProduct());
+  }, [id]);
 
   function handleAddToCart() {
     if (!product || product.stockQuantity <= 0) return;
@@ -270,6 +270,25 @@ export default function ProductDetailsPage() {
             <div className="mt-5 flex items-center gap-3 rounded-2xl bg-purple-50 p-4 text-sm text-purple-800">
               <Truck className="h-5 w-5" />
               Delivery tracking is available after checkout.
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-slate-100 p-4">
+                <p className="text-sm font-bold text-slate-900">
+                  Secure checkout
+                </p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  Your order is linked to your verified Retail360 account.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-100 p-4">
+                <p className="text-sm font-bold text-slate-900">
+                  Stock aware cart
+                </p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  Quantity controls respect the current available stock.
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>

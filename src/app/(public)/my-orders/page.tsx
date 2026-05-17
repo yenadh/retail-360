@@ -3,6 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   AlertTriangle,
@@ -86,10 +87,6 @@ export default function MyOrdersPage() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadOrders();
-  }, []);
-
   async function loadOrders() {
     setIsLoading(true);
 
@@ -114,14 +111,28 @@ export default function MyOrdersPage() {
     }
   }
 
+  useEffect(() => {
+    void Promise.resolve().then(() => loadOrders());
+  }, []);
+
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <section className="mx-auto">
+      <section className="mx-auto max-w-7xl">
         <div className="mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#2E1065] via-[#7C3AED] to-[#EC4899] p-6 text-white shadow-2xl shadow-purple-900/20 sm:p-8">
-          <h1 className="text-3xl font-bold sm:text-4xl">My Orders</h1>
-          <p className="mt-3 text-sm text-purple-100">
-            View your order history and current order status.
-          </p>
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div>
+              <h1 className="text-3xl font-bold sm:text-4xl">My Orders</h1>
+              <p className="mt-3 text-sm text-purple-100">
+                View your order history and current order status.
+              </p>
+            </div>
+
+            {!isLoading && orders.length > 0 && (
+              <div className="rounded-2xl bg-white/15 px-4 py-3 text-sm font-semibold">
+                {orders.length} order{orders.length === 1 ? "" : "s"} found
+              </div>
+            )}
+          </div>
         </div>
 
         {isLoading ? (
@@ -137,6 +148,12 @@ export default function MyOrdersPage() {
             <p className="mt-2 text-sm text-slate-500">
               Your orders will appear here after checkout.
             </p>
+            <Link
+              href="/products"
+              className="mt-6 inline-flex rounded-2xl bg-gradient-to-r from-[#2E1065] via-[#7C3AED] to-[#EC4899] px-6 py-3 text-sm font-bold text-white"
+            >
+              Shop Products
+            </Link>
           </div>
         ) : (
           <div className="overflow-hidden rounded-[2rem] border border-purple-100 bg-white shadow-xl shadow-purple-950/5">

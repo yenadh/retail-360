@@ -201,14 +201,6 @@ export default function AdminReportsPage() {
     return Math.max(...salesReport.salesByDay.map((item) => item.revenue), 1);
   }, [salesReport]);
 
-  useEffect(() => {
-    loadReports();
-  }, []);
-
-  useEffect(() => {
-    loadSalesReport();
-  }, [range]);
-
   async function loadReports() {
     setIsLoading(true);
     setError("");
@@ -279,6 +271,14 @@ export default function AdminReportsPage() {
     }
   }
 
+  useEffect(() => {
+    void Promise.resolve().then(() => loadReports());
+  }, []);
+
+  useEffect(() => {
+    void Promise.resolve().then(() => loadSalesReport());
+  }, [range]);
+
   if (isLoading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-50">
@@ -294,7 +294,7 @@ export default function AdminReportsPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <section className="mx-auto">
+      <section className="mx-auto max-w-7xl">
         <div className="mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#2E1065] via-[#7C3AED] to-[#EC4899] p-6 text-white shadow-2xl shadow-purple-900/20 sm:p-8">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
             <div>

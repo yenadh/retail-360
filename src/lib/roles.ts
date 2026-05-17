@@ -26,7 +26,7 @@ export const ROUTE_ROLE_ACCESS: Record<string, UserRole[]> = {
   ],
 
   "/admin/products": [USER_ROLES.ADMIN, USER_ROLES.INVENTORY_MANAGER],
-  "/admin/categories": [USER_ROLES.ADMIN, USER_ROLES.INVENTORY_MANAGER],
+  "/admin/category": [USER_ROLES.ADMIN, USER_ROLES.INVENTORY_MANAGER],
   "/admin/inventory": [USER_ROLES.ADMIN, USER_ROLES.INVENTORY_MANAGER],
   "/admin/suppliers": [USER_ROLES.ADMIN, USER_ROLES.INVENTORY_MANAGER],
 

@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  BarChart3,
   Boxes,
   Building2,
   ChevronDown,
@@ -189,7 +188,6 @@ export default function Navbar() {
 
   useEffect(() => {
     if (shouldHideNavbar) {
-      setLoadingUser(false);
       return;
     }
 
@@ -216,11 +214,6 @@ export default function Navbar() {
 
     loadCurrentUser();
   }, [shouldHideNavbar]);
-
-  useEffect(() => {
-    setMobileOpen(false);
-    setProfileOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (mobileOpen) {
@@ -273,7 +266,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden items-center gap-1 min-[1700px]:flex">
+          <div className="hidden items-center gap-1 min-[1400px]:flex">
             {visibleNavItems.map((item) => {
               const Icon = item.icon;
               const isActive =
@@ -285,7 +278,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition ${
+                  className={`flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-medium transition ${
                     isActive
                       ? "bg-purple-100 text-[#7C3AED]"
                       : "text-slate-600 hover:bg-purple-50 hover:text-[#7C3AED]"
@@ -298,7 +291,7 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="hidden items-center gap-3 min-[1700px]:flex">
+          <div className="hidden items-center gap-3 min-[1400px]:flex">
             {currentUser?.role === "CUSTOMER" && (
               <Link
                 href="/cart"
@@ -397,7 +390,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setMobileOpen(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-50 text-[#7C3AED] transition hover:bg-purple-100 min-[1700px]:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-50 text-[#7C3AED] transition hover:bg-purple-100 min-[1400px]:hidden"
             aria-label="Open menu"
           >
             <Menu className="h-5 w-5" />
@@ -416,7 +409,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-sm min-[1700px]:hidden"
+              className="fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-sm min-[1400px]:hidden"
             />
 
             <motion.aside
@@ -428,7 +421,7 @@ export default function Navbar() {
                 stiffness: 260,
                 damping: 28,
               }}
-              className="fixed right-0 top-0 z-[90] flex h-dvh w-[86%] max-w-sm flex-col overflow-hidden rounded-l-[2rem] border-l border-purple-100 bg-white shadow-2xl shadow-purple-950/30 min-[1700px]:hidden"
+              className="fixed right-0 top-0 z-[90] flex h-dvh w-[86%] max-w-sm flex-col overflow-hidden rounded-l-[2rem] border-l border-purple-100 bg-white shadow-2xl shadow-purple-950/30 min-[1400px]:hidden"
             >
               <div className="bg-gradient-to-br from-[#2E1065] via-[#7C3AED] to-[#EC4899] p-5 text-white">
                 <div className="mb-6 flex items-center justify-between">

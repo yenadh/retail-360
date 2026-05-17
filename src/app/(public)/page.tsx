@@ -7,12 +7,16 @@ import Link from "next/link";
 import {
   ArrowRight,
   Boxes,
-  CheckCircle2,
+  CreditCard,
+  Headphones,
   Loader2,
   Package,
   ShieldCheck,
   ShoppingBag,
+  Sparkles,
+  Store,
   Truck,
+  Users,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -57,10 +61,6 @@ export default function StoreHomePage() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadFeaturedProducts();
-  }, []);
-
   async function loadFeaturedProducts() {
     try {
       const response = await fetch("/api/store/products?featured=true", {
@@ -77,13 +77,17 @@ export default function StoreHomePage() {
     }
   }
 
+  useEffect(() => {
+    loadFeaturedProducts();
+  }, []);
+
   return (
     <main className="min-h-screen bg-slate-50">
       <section className="relative overflow-hidden bg-gradient-to-br from-[#2E1065] via-[#7C3AED] to-[#EC4899] px-4 py-20 text-white sm:px-6 lg:px-8">
         <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-24 -right-20 h-80 w-80 rounded-full bg-pink-300/20 blur-3xl" />
 
-        <div className="relative mx-auto grid items-center gap-12 lg:grid-cols-2">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -94,12 +98,13 @@ export default function StoreHomePage() {
             </div>
 
             <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
-              Shop smarter with a modern retail experience.
+              Shop smarter and run retail operations with confidence.
             </h1>
 
             <p className="mt-5 max-w-xl text-sm leading-7 text-purple-100 sm:text-base">
-              Browse products, add items to cart, place orders, and track your
-              purchases through a complete digital retail platform.
+              Retail360 connects customers, stock teams, sales staff, and
+              delivery teams in one clean workflow from product discovery to
+              doorstep delivery.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -117,6 +122,12 @@ export default function StoreHomePage() {
               >
                 Track Orders
               </Link>
+            </div>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <HeroStat value="360°" label="Retail visibility" />
+              <HeroStat value="24/7" label="Online shopping" />
+              <HeroStat value="Live" label="Stock awareness" />
             </div>
           </motion.div>
 
@@ -151,7 +162,67 @@ export default function StoreHomePage() {
         </div>
       </section>
 
-      <section className="mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
+        <ValueCard
+          icon={Store}
+          title="Curated Shopping"
+          text="Explore products, compare prices, and add available stock to cart without friction."
+        />
+        <ValueCard
+          icon={CreditCard}
+          title="Simple Checkout"
+          text="Place orders with delivery details, payment status tracking, and order history."
+        />
+        <ValueCard
+          icon={Headphones}
+          title="Connected Support"
+          text="Customers and staff share the same operational source of truth."
+        />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+        <div className="grid overflow-hidden rounded-[2rem] border border-purple-100 bg-white shadow-xl shadow-purple-950/5 lg:grid-cols-[1fr_1.1fr]">
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 sm:p-8">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#7C3AED] shadow-sm">
+              <Sparkles className="h-4 w-4" />
+              Built for both sides of retail
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+              A storefront for customers and a command center for teams.
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-slate-500">
+              Customers get a polished shopping journey. Admins and staff get
+              inventory, categories, orders, suppliers, deliveries, users, and
+              reports in one role-aware workspace.
+            </p>
+          </div>
+
+          <div className="grid gap-4 p-6 sm:grid-cols-2 sm:p-8">
+            <ProcessStep
+              number="01"
+              title="Discover"
+              text="Browse active categories and products."
+            />
+            <ProcessStep
+              number="02"
+              title="Order"
+              text="Add to cart and complete checkout."
+            />
+            <ProcessStep
+              number="03"
+              title="Fulfill"
+              text="Sales, inventory, and delivery teams process orders."
+            />
+            <ProcessStep
+              number="04"
+              title="Track"
+              text="Customers follow order progress from their account."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-slate-900">
@@ -245,7 +316,52 @@ export default function StoreHomePage() {
           </div>
         )}
       </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-[2rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-950/20 sm:p-8">
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-purple-100">
+                <Users className="h-4 w-4" />
+                Ready to explore?
+              </div>
+              <h2 className="text-2xl font-bold sm:text-3xl">
+                Start shopping or sign in to manage your retail operations.
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
+                Retail360 keeps shopping, stock movement, order handling, and
+                reporting connected from the first click to final delivery.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/products"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-bold text-slate-950"
+              >
+                Browse Products
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                Staff Login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+  );
+}
+
+function HeroStat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
+      <p className="text-2xl font-bold">{value}</p>
+      <p className="mt-1 text-xs font-medium text-purple-100">{label}</p>
+    </div>
   );
 }
 
@@ -265,6 +381,49 @@ function FeatureCard({
       </div>
       <h3 className="font-bold">{title}</h3>
       <p className="mt-1 text-sm text-purple-100">{text}</p>
+    </div>
+  );
+}
+
+function ValueCard({
+  icon: Icon,
+  title,
+  text,
+}: {
+  icon: React.ElementType;
+  title: string;
+  text: string;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      className="rounded-[2rem] border border-purple-100 bg-white p-6 shadow-lg shadow-purple-950/5"
+    >
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-[#7C3AED]">
+        <Icon className="h-6 w-6" />
+      </div>
+      <h3 className="font-bold text-slate-900">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-500">{text}</p>
+    </motion.div>
+  );
+}
+
+function ProcessStep({
+  number,
+  title,
+  text,
+}: {
+  number: string;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-3xl border border-slate-100 bg-slate-50 p-5">
+      <span className="text-xs font-bold text-[#7C3AED]">{number}</span>
+      <h3 className="mt-2 font-bold text-slate-900">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-500">{text}</p>
     </div>
   );
 }

@@ -17,26 +17,15 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const body = await request.json();
-
-    console.log("LOGIN BODY:", {
-      email: body.email,
-      hasPassword: !!body.password,
-      passwordLength: body.password?.length,
-    });
-
     const validatedData = loginSchema.parse(body);
 
     const email = validatedData.email.toLowerCase().trim();
     const password = validatedData.password;
 
-    console.log("LOGIN EMAIL AFTER FORMAT:", email);
-
     const user = await User.findOne({
       email,
       isDeleted: false,
     });
-
-    console.log("USER FOUND:", !!user);
 
     if (!user) {
       return NextResponse.json(
@@ -47,16 +36,6 @@ export async function POST(request: NextRequest) {
         { status: 401 },
       );
     }
-
-    console.log("USER STATUS:", {
-      email: user.email,
-      isActive: user.isActive,
-      isDeleted: user.isDeleted,
-      isEmailVerified: user.isEmailVerified,
-      passwordExists: !!user.password,
-      passwordStartsWithBcrypt:
-        typeof user.password === "string" && user.password.startsWith("$2"),
-    });
 
     if (!user.isActive) {
       return NextResponse.json(
@@ -79,8 +58,6 @@ export async function POST(request: NextRequest) {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    console.log("PASSWORD VALID:", isPasswordValid);
 
     if (!isPasswordValid) {
       return NextResponse.json(

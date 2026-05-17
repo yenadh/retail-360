@@ -60,7 +60,7 @@ export default function CheckoutPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setItems(getCartItems());
+    void Promise.resolve().then(() => setItems(getCartItems()));
   }, []);
 
   const subtotal = getCartTotal(items);
@@ -148,10 +148,18 @@ export default function CheckoutPage() {
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
       <section className="mx-auto max-w-7xl">
         <div className="mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#2E1065] via-[#7C3AED] to-[#EC4899] p-6 text-white shadow-2xl shadow-purple-900/20 sm:p-8">
-          <h1 className="text-3xl font-bold sm:text-4xl">Checkout</h1>
-          <p className="mt-3 text-sm text-purple-100">
-            Add shipping details and place your order.
-          </p>
+          <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <h1 className="text-3xl font-bold sm:text-4xl">Checkout</h1>
+              <p className="mt-3 text-sm text-purple-100">
+                Add shipping details and place your order.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white/15 px-4 py-3 text-sm font-semibold">
+              {items.length} item{items.length === 1 ? "" : "s"} ready
+            </div>
+          </div>
         </div>
 
         {error && (

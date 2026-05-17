@@ -91,10 +91,6 @@ export default function ProductsPage() {
     });
   }, [products, searchText, categoryId]);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   async function loadData() {
     setIsLoading(true);
 
@@ -130,6 +126,10 @@ export default function ProductsPage() {
     }
   }
 
+  useEffect(() => {
+    void Promise.resolve().then(() => loadData());
+  }, []);
+
   function handleAddToCart(product: Product) {
     if (product.stockQuantity <= 0) return;
 
@@ -155,12 +155,23 @@ export default function ProductsPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <section className="mx-auto">
+      <section className="mx-auto max-w-7xl">
         <div className="mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#2E1065] via-[#7C3AED] to-[#EC4899] p-6 text-white shadow-2xl shadow-purple-900/20 sm:p-8">
-          <h1 className="text-3xl font-bold sm:text-4xl">Shop Products</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-purple-100">
-            Browse the product catalogue and add items to your cart.
-          </p>
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <h1 className="text-3xl font-bold sm:text-4xl">Shop Products</h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-purple-100">
+                Browse the product catalogue, filter by category, and add
+                available items to your cart.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <CatalogStat label="Products" value={products.length} />
+              <CatalogStat label="Categories" value={categories.length} />
+              <CatalogStat label="Showing" value={filteredProducts.length} />
+            </div>
+          </div>
         </div>
 
         {message && (
@@ -280,5 +291,14 @@ export default function ProductsPage() {
         )}
       </section>
     </main>
+  );
+}
+
+function CatalogStat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-2xl bg-white/15 px-4 py-3 text-center">
+      <p className="text-2xl font-bold">{value}</p>
+      <p className="mt-1 text-xs font-semibold text-purple-100">{label}</p>
+    </div>
   );
 }

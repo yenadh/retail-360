@@ -131,11 +131,6 @@ export async function POST(request: NextRequest) {
       }),
     });
 
-    console.log("PASSWORD RESET CODE SENT:", {
-      email,
-      code: process.env.NODE_ENV === "development" ? code : "hidden",
-    });
-
     return NextResponse.json(
       {
         success: true,

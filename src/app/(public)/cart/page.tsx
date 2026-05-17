@@ -25,7 +25,7 @@ export default function CartPage() {
   const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    setItems(getCartItems());
+    void Promise.resolve().then(() => setItems(getCartItems()));
   }, []);
 
   function handleUpdateQuantity(productId: string, quantity: number) {
@@ -42,7 +42,7 @@ export default function CartPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <section className="mx-auto">
+      <section className="mx-auto max-w-7xl">
         <Link
           href="/products"
           className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[#7C3AED]"
@@ -143,6 +143,9 @@ export default function CartPage() {
               <h2 className="text-xl font-bold text-slate-900">
                 Order Summary
               </h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Delivery fee is calculated for the current cart.
+              </p>
 
               <div className="mt-5 space-y-3 text-sm">
                 <SummaryRow label="Subtotal" value={formatCurrency(subtotal)} />
@@ -165,6 +168,11 @@ export default function CartPage() {
               >
                 Proceed to Checkout
               </Link>
+
+              <div className="mt-5 rounded-2xl bg-purple-50 p-4 text-sm leading-6 text-purple-800">
+                Your cart is saved in this browser and can be adjusted before
+                checkout.
+              </div>
             </div>
           </div>
         )}
