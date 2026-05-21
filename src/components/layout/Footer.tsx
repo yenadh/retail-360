@@ -25,7 +25,12 @@ const adminLinks = [
   { label: "Reports", href: "/admin/reports" },
 ];
 
-const hiddenFooterRoutes = ["/login", "/register", "/unauthorized"];
+const hiddenFooterRoutes = [
+  "/login",
+  "/register",
+  "/unauthorized",
+  "/admin",
+];
 
 export default function Footer() {
   const pathname = usePathname();
